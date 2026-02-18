@@ -11,6 +11,7 @@ const OFFLINE_URL = 'index.html';
 const CORE_ASSETS = [
   './',
   './index.html',
+  './generate-icons.html',
   './login.html',
   './signup.html',
   './challenge-selection.html',

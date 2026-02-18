@@ -47,7 +47,7 @@ If your site is at `https://user.github.io/mazoezi-app/`:
 
 The manifest references PNG icons. Generate them:
 
-1. Open `assets/icons/generate-icons.html` in a browser
+1. Open [generate-icons.html](https://kasigila.github.io/mazoezi-app/generate-icons.html) (or `generate-icons.html` in the project root) in a browser
 2. Click each size button to download
 3. Save files as `icon-72.png`, `icon-96.png`, etc. in `assets/icons/`
 
