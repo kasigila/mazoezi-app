@@ -6,10 +6,10 @@ A production-ready PWA for controlled transformation through consistency, accoun
 
 ## Quick Start
 
-1. **Visit the site**: [mazoezi-app live](https://kasigila.github.io/mazoezi-app/) (or your own GitHub Pages URL after deployment)
+1. **Visit the site**: [mazoezi-app live](https://kasigila.github.io/mazoezi-app/)
 2. Flow: Welcome → Sign up → Select Challenge → Dashboard
 
-Everything runs in the browser. No local server, Firebase, or backend required. Data is stored locally (localStorage + IndexedDB).
+Everything runs in the browser. No local server or backend required. If the link returns 404, enable GitHub Pages in **Settings > Pages** (Deploy from branch `main`, folder `/ (root)`). See [SETUP.md](SETUP.md) for details.
 
 ## Full Setup
 

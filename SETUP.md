@@ -14,13 +14,18 @@ Complete instructions for GitHub Pages deployment. **No Firebase, no backend** �
 
 ## 2. GitHub Pages Deployment
 
-### Option A: Repository Pages
+### Enable Pages (required)
 
 1. Push this project to a GitHub repository
-2. **Settings > Pages**
-3. Source: **Deploy from a branch**
-4. Branch: **main** (or **master**), folder: **/ (root)**
-5. Save. The site will be at `https://<username>.github.io/<repo>/`
+2. Go to the repo: **Settings > Pages**
+3. Under **Build and deployment**:
+   - Source: **Deploy from a branch**
+   - Branch: **main** (or **master**)
+   - Folder: **/ (root)**
+4. Click **Save**. Wait 1–2 minutes for the first deploy.
+5. The site will be at `https://<username>.github.io/<repo>/`
+
+If you get 404, check Settings > Pages and confirm the source branch/folder.
 
 ### Option B: Custom Domain
 
@@ -47,9 +52,10 @@ If your site is at `https://user.github.io/mazoezi-app/`:
 
 The manifest references PNG icons. Generate them:
 
-1. Open [generate-icons.html](https://kasigila.github.io/mazoezi-app/generate-icons.html) (or `generate-icons.html` in the project root) in a browser
-2. Click each size button to download
-3. Save files as `icon-72.png`, `icon-96.png`, etc. in `assets/icons/`
+1. **If the site is live:** Open `https://<username>.github.io/mazoezi-app/generate-icons.html`
+2. **If Pages isn't set up yet:** Clone the repo, then double-click `generate-icons.html` (or drag it into a browser)
+3. Click each size button to download
+4. Save files as `icon-72.png`, `icon-96.png`, etc. in `assets/icons/`
 
 Or use any 512×512 PNG and resize for each size. The manifest expects:
 
@@ -123,6 +129,7 @@ The service worker uses versioned cache: `mazoezi-v1.1.0`. To force a refresh:
 
 | Issue | Fix |
 |-------|-----|
+| Site or pages return 404 | Enable GitHub Pages: repo **Settings > Pages** > Deploy from branch **main** and folder **/ (root)**. Wait 1–2 min. |
 | Data lost on clear browser data | Data is local only. Export JSON from Settings for backup. |
 | Icons not showing in install prompt | Add all manifest icon sizes; regenerate with `generate-icons.html` |
 | Offline not working | Serve over HTTPS/localhost; check service worker registration |
