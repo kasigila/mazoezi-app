@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FFFFFF">
+  <title>Log In | MAZOEZI</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="landing.css">
+</head>
+<body>
+  <div class="landing-bg"></div>
+
+  <a href="index.html" class="auth-back">
+    <i class="fas fa-arrow-left"></i> Back
+  </a>
+
+  <main class="auth-page">
+    <div class="auth-card">
+      <h1>Log In</h1>
+      <p>Welcome back. Pick up where you left off.</p>
+
+      <div id="authError" class="auth-error"></div>
+
+      <button type="button" id="googleLoginBtn" class="auth-google-btn">
+        <i class="fab fa-google"></i> Continue with Google
+      </button>
+
+      <div class="auth-divider">or</div>
+
+      <form id="loginForm">
+        <div class="auth-form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+        </div>
+        <div class="auth-form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="auth-submit-btn" id="loginSubmitBtn">Log In</button>
+      </form>
+
+      <p class="auth-footer-link">
+        Don't have an account? <a href="signup.html">Sign up</a>
+      </p>
+    </div>
+  </main>
+
+  <script type="module" src="auth.js"></script>
+  <script type="module">
+    import { showError, hideError } from './auth.js';
+
+    const form = document.getElementById('loginForm');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const submitBtn = document.getElementById('loginSubmitBtn');
+    const googleBtn = document.getElementById('googleLoginBtn');
+
+    window.addEventListener('auth:login', () => {
+      window.location.href = 'dashboard.html';
+    });
+
+    window.addEventListener('auth:error', (e) => {
+      showError(e.detail?.message || 'Login failed.');
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideError();
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Logging in...';
+      const success = await window.authLogin(emailInput.value, passwordInput.value);
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Log In';
+      if (!success) {
+        showError('Invalid email or password.');
+      }
+    });
+
+    googleBtn.addEventListener('click', () => {
+      window.authLoginWithGoogle && window.authLoginWithGoogle();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FFFFFF">
+  <title>Dashboard | MAZOEZI</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-bg"></div>
+
+  <header class="app-header">
+    <a href="index.html" class="app-logo">MAZOEZI</a>
+    <div class="header-stats">
+      <span class="header-stat" id="headerChallenge">Challenge</span>
+      <span class="header-stat" id="headerDay">Day 1 of 75</span>
+      <span class="header-stat" id="headerStreak">0</span>
+      <span class="header-stat" id="headerScore">--</span>
+      <span class="header-stat lock-badge" id="lockBadge" style="display: none;"><i class="fas fa-lock"></i> Locked</span>
+    </div>
+    <nav class="app-nav">
+      <button class="app-nav-btn active" data-section="dashboard"><i class="fas fa-gauge-high"></i> Today</button>
+      <button class="app-nav-btn" data-section="proof"><i class="fas fa-images"></i> Proof</button>
+      <button class="app-nav-btn" data-section="analytics"><i class="fas fa-chart-line"></i> Analytics</button>
+      <button class="app-nav-btn" data-section="settings"><i class="fas fa-gear"></i> Settings</button>
+      <a href="#" id="logoutBtn" class="app-nav-btn"><i class="fas fa-right-from-bracket"></i> Logout</a>
+    </nav>
+  </header>
+
+  <main class="app-main">
+    <section id="section-dashboard" class="section active">
+      <div class="panel progress-summary">
+        <div class="summary-row">
+          <div class="xp-meter-wrap">
+            <div class="xp-circle" id="xpCircle" style="--pct: 0%">
+              <div class="xp-circle-inner">
+                <span class="lvl" id="xpLevel">1</span>
+                <span class="txt">LEVEL</span>
+              </div>
+            </div>
+            <div>
+              <div class="value" id="xpCurrent">0</div>
+              <div class="label">Total XP</div>
+              <div class="value-sm" id="xpToday">0</div>
+              <div class="label">XP today</div>
+            </div>
+          </div>
+          <div class="completion-pct" id="completionPct">0%</div>
+        </div>
+      </div>
+
+      <div class="momentum-bar" id="momentumBar">
+        <span class="momentum-label">Momentum</span>
+        <span class="momentum-state" id="momentumState">Stable</span>
+      </div>
+
+      <div class="panel discipline-panel">
+        <h2 class="panel-title"><i class="fas fa-chart-simple"></i> Discipline Score</h2>
+        <div class="score-display">
+          <span class="score-value" id="disciplineScore">--</span>
+          <span class="score-trend" id="scoreTrend"></span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2 class="panel-title"><i class="fas fa-list-check"></i> Today's Standards</h2>
+        <p class="panel-hint">3-hour grace after midnight. All required.</p>
+        <ul class="standard-list" id="standardList"></ul>
+      </div>
+
+      <div class="panel">
+        <h2 class="panel-title"><i class="fas fa-calendar-days"></i> Cycle Timeline</h2>
+        <div class="cycle-timeline" id="cycleTimeline"></div>
+      </div>
+
+      <div class="panel">
+        <h2 class="panel-title"><i class="fas fa-bell"></i> Reminders</h2>
+        <div class="toggle-wrap">
+          <span>Enable notifications</span>
+          <button type="button" class="toggle" id="notifyToggle" aria-label="Toggle notifications"></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-proof" class="section">
+      <div class="panel">
+        <h2 class="panel-title"><i class="fas fa-images"></i> Visual Proof</h2>
+        <div class="proof-filters">
+          <select id="proofFilterTask"><option value="">All standards</option></select>
+          <input type="date" id="proofFilterDate">
+          <button type="button" class="btn-secondary" id="proofFilterReset">Reset</button>
+        </div>
+        <div class="proof-grid" id="proofGrid"></div>
+      </div>
+      <div class="panel">
+        <h2 class="panel-title"><i class="fas fa-arrows-left-right"></i> Before / After</h2>
+        <div class="comparison-wrap" id="comparisonWrap" style="display: none;">
+          <img id="compareBefore" src="" alt="Before">
+          <img id="compareAfter" src="" alt="After">
+          <div class="comparison-slider" id="comparisonSlider"></div>
+        </div>
+        <p id="comparisonHint" class="panel-hint">Select two proof images to compare.</p>
+      </div>
+    </section>
+
+    <section id="section-analytics" class="section">
+      <div class="panel">
+        <h2 class="panel-title"><i class="fas fa-calendar-heat"></i> Activity</h2>
+        <div class="heatmap-grid" id="heatmapGrid"></div>
+      </div>
+      <div class="panel">
+        <h2 class="panel-title"><i class="fas fa-chart-line"></i> Discipline Score</h2>
+        <canvas id="scoreChart" height="180"></canvas>
+      </div>
+      <div class="panel">
+        <h2 class="panel-title"><i class="fas fa-chart-area"></i> XP Growth</h2>
+        <canvas id="xpChart" height="180"></canvas>
+      </div>
+      <div class="panel" id="riskPanel" style="display: none;">
+        <h2 class="panel-title"><i class="fas fa-triangle-exclamation"></i> Risk Pattern</h2>
+        <ul class="risk-insights" id="riskInsights"></ul>
+      </div>
+      <div class="panel">
+        <h2 class="panel-title"><i class="fas fa-file-export"></i> Monthly Review</h2>
+        <button type="button" class="btn-primary" id="exportMonthlyBtn">Export HTML Summary</button>
+      </div>
+    </section>
+
+    <section id="section-settings" class="section">
+      <div class="panel">
+        <h2 class="panel-title"><i class="fas fa-database"></i> Data</h2>
+        <ul class="settings-list">
+          <li><span>Export JSON</span><button type="button" id="exportDataBtn">Export</button></li>
+          <li><span>Import backup</span><input type="file" id="importFile" accept=".json" style="display: none;"><button type="button" id="importDataBtn">Import</button></li>
+          <li><span>Reset cycle</span><button type="button" id="resetCycleBtn" class="danger">Reset</button></li>
+          <li><span>Delete account</span><button type="button" id="deleteAccountBtn" class="danger">Delete</button></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-overlay" id="confirmModal">
+    <div class="modal">
+      <h2>Your 75-day cycle begins now.</h2>
+      <p>Day 1 of 75.</p>
+      <button type="button" class="modal-btn primary" id="confirmBegin">Begin Protocol</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="relapseModal">
+    <div class="modal">
+      <h2>What interrupted your protocol?</h2>
+      <ul class="relapse-options" id="relapseOptions"></ul>
+      <button type="button" class="modal-btn secondary" id="relapseSkip">Skip</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="levelUpModal">
+    <div class="modal">
+      <i class="fas fa-star"></i>
+      <h2>Level Up</h2>
+      <p>Level <span id="levelUpNum">2</span>.</p>
+      <button type="button" class="modal-btn primary" id="levelUpOk">Continue</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

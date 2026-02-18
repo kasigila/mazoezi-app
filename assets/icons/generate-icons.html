@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Generate MAZOEZI Icons</title>
+  <style>
+    body { font-family: system-ui; background: #F8F9FB; color: #111111; padding: 24px; }
+    canvas { display: block; margin: 16px 0; background: #16161d; border-radius: 8px; }
+    button { padding: 12px 20px; background: #E6007A; border: none; border-radius: 8px; color: white; cursor: pointer; margin: 4px; transition: background 250ms; }
+    button:hover { background: #C50067; }
+    p { color: #4B5563; margin-top: 24px; }
+  </style>
+</head>
+<body>
+  <h1>MAZOEZI Icon Generator</h1>
+  <p>Open this file in a browser, click each button to download the icon. Save to assets/icons/</p>
+  <div id="buttons"></div>
+
+  <script>
+    const sizes = [72, 96, 128, 144, 192, 512];
+    const container = document.getElementById('buttons');
+
+    function drawIcon(size) {
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, size, size);
+
+      const gradient = ctx.createLinearGradient(0, 0, size, size);
+      gradient.addColorStop(0, '#E6007A');
+      gradient.addColorStop(1, '#C50067');
+
+      ctx.fillStyle = gradient;
+      ctx.font = `bold ${size * 0.45}px system-ui, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('M', size / 2, size / 2);
+
+      return canvas;
+    }
+
+    sizes.forEach(s => {
+      const btn = document.createElement('button');
+      btn.textContent = `Download ${s}x${s}`;
+      btn.onclick = () => {
+        const c = drawIcon(s);
+        const a = document.createElement('a');
+        a.href = c.toDataURL('image/png');
+        a.download = `icon-${s}.png`;
+        a.click();
+      };
+      container.appendChild(btn);
+    });
+  </script>
+</body>
+</html>

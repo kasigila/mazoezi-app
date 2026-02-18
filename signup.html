@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FFFFFF">
+  <title>Sign Up | MAZOEZI</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="landing.css">
+</head>
+<body>
+  <div class="landing-bg"></div>
+
+  <a href="index.html" class="auth-back">
+    <i class="fas fa-arrow-left"></i> Back
+  </a>
+
+  <main class="auth-page">
+    <div class="auth-card">
+      <h1>Sign Up</h1>
+      <p>Create your account. Start your streak today.</p>
+
+      <div id="authError" class="auth-error"></div>
+
+      <button type="button" id="googleSignupBtn" class="auth-google-btn">
+        <i class="fab fa-google"></i> Continue with Google
+      </button>
+
+      <div class="auth-divider">or</div>
+
+      <form id="signupForm">
+        <div class="auth-form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+        </div>
+        <div class="auth-form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Min 6 characters" required minlength="6" autocomplete="new-password">
+        </div>
+        <button type="submit" class="auth-submit-btn" id="signupSubmitBtn">Create Account</button>
+      </form>
+
+      <p class="auth-footer-link">
+        Already have an account? <a href="login.html">Log in</a>
+      </p>
+    </div>
+  </main>
+
+  <script type="module" src="auth.js"></script>
+  <script type="module">
+    import { showError, hideError } from './auth.js';
+
+    const form = document.getElementById('signupForm');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const submitBtn = document.getElementById('signupSubmitBtn');
+    const googleBtn = document.getElementById('googleSignupBtn');
+
+    window.addEventListener('auth:signup', () => {
+      window.location.href = 'challenge-selection.html';
+    });
+
+    window.addEventListener('auth:error', (e) => {
+      showError(e.detail?.message || 'Signup failed.');
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideError();
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Creating account...';
+      const success = await window.authSignup(emailInput.value, passwordInput.value);
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Create Account';
+      if (!success) {
+        showError('Could not create account. Try again.');
+      }
+    });
+
+    googleBtn.addEventListener('click', () => {
+      window.authSignupWithGoogle && window.authSignupWithGoogle();
+    });
+  </script>
+</body>
+</html>
