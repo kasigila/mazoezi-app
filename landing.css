@@ -45,7 +45,10 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   min-height: 100vh;
+  min-height: 100dvh;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 /* Subtle grid background - no large pink blocks */
@@ -71,12 +74,15 @@ body {
 /* Welcome screen */
 .welcome-screen {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   padding: 24px;
+  padding-top: max(24px, env(safe-area-inset-top));
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
 }
 
 .welcome-screen h1 {
@@ -208,7 +214,8 @@ body {
 .challenge-selection {
   max-width: 900px;
   margin: 0 auto;
-  padding: 80px 24px 40px;
+  padding: 70px 16px 24px;
+  padding-top: max(70px, env(safe-area-inset-top));
 }
 
 .challenge-selection h1 {
@@ -235,8 +242,8 @@ body {
 
 .challenge-cards-wrap {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+  gap: 12px;
 }
 
 .challenge-card {
@@ -627,17 +634,19 @@ body {
 /* Auth pages */
 .auth-page {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 120px 24px 80px;
+  padding: 60px 16px 40px;
+  padding-top: max(60px, env(safe-area-inset-top));
 }
 
 .auth-card {
   width: 100%;
   max-width: 420px;
-  padding: 40px;
+  padding: 28px 20px;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-xl);
@@ -789,8 +798,8 @@ body {
 
 .auth-back {
   position: absolute;
-  top: 24px;
-  left: 24px;
+  top: max(24px, env(safe-area-inset-top));
+  left: max(24px, env(safe-area-inset-left));
   color: var(--text-secondary);
   text-decoration: none;
   display: flex;
@@ -798,8 +807,71 @@ body {
   gap: 8px;
   font-size: 0.95rem;
   transition: color var(--transition-btn);
+  padding: 8px 0;
 }
 
 .auth-back:hover {
   color: var(--accent-primary);
+}
+
+/* Modals (challenge selection, custom config) */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.modal-overlay.show {
+  display: flex;
+}
+
+.modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  max-width: 420px;
+  width: 100%;
+  margin: auto;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal h2 { font-size: 1.25rem; margin-bottom: 12px; }
+.modal p { color: var(--text-secondary); margin-bottom: 16px; font-size: 0.95rem; }
+.modal-buttons { display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap; }
+
+.modal-btn {
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  font-size: 0.95rem;
+  transition: all var(--transition-btn);
+}
+
+.modal-btn.primary {
+  background: var(--accent-primary);
+  color: white;
+}
+
+.modal-btn.primary:hover {
+  background: var(--accent-hover);
+  box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.modal-btn.secondary {
+  background: var(--bg-main);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
 }

@@ -53,7 +53,9 @@ function showConfirm(challenge) {
   };
   document.getElementById('confirmSummary').textContent = `${challenge.name} (${challenge.duration} days). Standards: ${standards.map(s => s.name).join(', ')}.`;
   document.getElementById('confirmTerms').textContent = challenge.terms;
-  document.getElementById('confirmModal').classList.add('show');
+  const modal = document.getElementById('confirmModal');
+  modal.classList.add('show');
+  modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('show'); };
 }
 
 document.getElementById('confirmBack').addEventListener('click', () => {
@@ -76,8 +78,10 @@ document.getElementById('confirmBegin').addEventListener('click', () => {
   window.location.href = 'dashboard.html';
 });
 
-document.getElementById('customCard').querySelector('[data-custom]').addEventListener('click', () => {
-  document.getElementById('customModal').classList.add('show');
+document.getElementById('customCard')?.querySelector('[data-custom]')?.addEventListener('click', () => {
+  const modal = document.getElementById('customModal');
+  modal.classList.add('show');
+  modal.onclick = (e) => { if (e.target === modal) { modal.classList.remove('show'); } };
   renderGoalPicker();
 });
 

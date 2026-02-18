@@ -425,6 +425,18 @@ authRequire(async (user) => {
 
   document.getElementById('levelUpOk')?.addEventListener('click', () => document.getElementById('levelUpModal').classList.remove('show'));
 
+  const notifyToggle = document.getElementById('notifyToggle');
+  if (notifyToggle) {
+    const prefs = userProfile.preferences || {};
+    notifyToggle.classList.toggle('on', !!prefs.notifications);
+    notifyToggle.addEventListener('click', () => {
+      notifyToggle.classList.toggle('on');
+      const isOn = notifyToggle.classList.contains('on');
+      saveProfile({ preferences: { ...(userProfile.preferences || {}), notifications: isOn } });
+      userProfile = getProfile();
+    });
+  }
+
   document.querySelectorAll('.app-nav-btn[data-section]').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.app-nav-btn[data-section]').forEach(b => b.classList.remove('active'));
@@ -510,8 +522,8 @@ authRequire(async (user) => {
   });
 
   document.getElementById('deleteAccountBtn')?.addEventListener('click', () => {
-    if (confirm('Clear all data and reset? This cannot be undone.')) {
-      storage.clearAll();
+    if (confirm('Delete this account? All data for this profile will be removed. This cannot be undone.')) {
+      storage.clearProfile();
       localStorage.removeItem('mazoezi_session');
       window.location.href = 'index.html';
     }

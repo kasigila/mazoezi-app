@@ -4,13 +4,14 @@
  * Version: 1.0.0
  */
 
-const CACHE_NAME = 'mazoezi-v1.1.0';
+const CACHE_NAME = 'mazoezi-v1.2.0';
 const OFFLINE_URL = 'index.html';
 
 // Core assets to cache for offline dashboard viewing
 const CORE_ASSETS = [
   './',
   './index.html',
+  './onboarding.html',
   './generate-icons.html',
   './login.html',
   './signup.html',
