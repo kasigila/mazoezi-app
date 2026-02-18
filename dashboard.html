@@ -27,7 +27,7 @@
       <button class="app-nav-btn" data-section="proof"><i class="fas fa-images"></i> Proof</button>
       <button class="app-nav-btn" data-section="analytics"><i class="fas fa-chart-line"></i> Analytics</button>
       <button class="app-nav-btn" data-section="settings"><i class="fas fa-gear"></i> Settings</button>
-      <a href="#" id="logoutBtn" class="app-nav-btn"><i class="fas fa-right-from-bracket"></i> Logout</a>
+      <button type="button" id="logoutBtn" class="app-nav-btn"><i class="fas fa-right-from-bracket"></i> Logout</button>
     </nav>
   </header>
 
@@ -146,8 +146,8 @@
 
   <div class="modal-overlay" id="confirmModal">
     <div class="modal">
-      <h2>Your 75-day cycle begins now.</h2>
-      <p>Day 1 of 75.</p>
+      <h2 id="confirmModalTitle">Your cycle begins now.</h2>
+      <p id="confirmModalDay">Day 1.</p>
       <button type="button" class="modal-btn primary" id="confirmBegin">Begin Protocol</button>
     </div>
   </div>

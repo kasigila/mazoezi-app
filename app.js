@@ -416,6 +416,11 @@ authRequire(async (user) => {
 
   const confirmModal = document.getElementById('confirmModal');
   if (getCycleDay() === 1 && !sessionStorage.getItem('mazoezi_confirmed')) {
+    const total = getCycleDays();
+    const titleEl = document.getElementById('confirmModalTitle');
+    const dayEl = document.getElementById('confirmModalDay');
+    if (titleEl) titleEl.textContent = `Your ${total}-day cycle begins now.`;
+    if (dayEl) dayEl.textContent = `Day 1 of ${total}.`;
     confirmModal.classList.add('show');
   }
   document.getElementById('confirmBegin')?.addEventListener('click', () => {
@@ -444,20 +449,26 @@ authRequire(async (user) => {
       document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
       document.getElementById('section-' + btn.dataset.section).classList.add('active');
       if (btn.dataset.section === 'analytics') {
-        renderHeatmap(document.getElementById('heatmapGrid'), buildHeatmapData(completionHistory));
+        const heatmapEl = document.getElementById('heatmapGrid');
+        const scoreChartEl = document.getElementById('scoreChart');
+        const xpChartEl = document.getElementById('xpChart');
+        const riskPanel = document.getElementById('riskPanel');
+        const riskInsights = document.getElementById('riskInsights');
+        if (heatmapEl) renderHeatmap(heatmapEl, buildHeatmapData(completionHistory));
         const scoreData = Object.entries(completionHistory).sort((a,b) => a[0].localeCompare(b[0])).slice(-30);
-        initScoreChart(document.getElementById('scoreChart'), scoreData.map(([d]) => d.slice(5)), scoreData.map(([,v]) => Math.round(v * 100)));
+        if (scoreChartEl) initScoreChart(scoreChartEl, scoreData.map(([d]) => d.slice(5)), scoreData.map(([,v]) => Math.round(v * 100)));
         const xpEntries = Object.entries(xpHistory).sort((a,b) => a[0].localeCompare(b[0]));
         let cum = 0;
-        initXPChart(document.getElementById('xpChart'), xpEntries.map(([d]) => d.slice(5)), xpEntries.map(([,v]) => { cum += v; return cum; }));
+        if (xpChartEl) initXPChart(xpChartEl, xpEntries.map(([d]) => d.slice(5)), xpEntries.map(([,v]) => { cum += v; return cum; }));
         const risk = analyzeRelapsePatterns(archivedCycles);
-        if (risk) {
-          document.getElementById('riskPanel').style.display = 'block';
-          const ul = document.getElementById('riskInsights');
-          ul.innerHTML = '';
-          if (risk.topDay) ul.innerHTML += `<li>Most resets on ${risk.topDay}s.</li>`;
-          if (risk.topMissed) ul.innerHTML += `<li>${risk.topMissed} most frequently missed.</li>`;
-          if (risk.topReason) ul.innerHTML += `<li>Common reason: ${risk.topReason}.</li>`;
+        if (riskPanel) {
+          riskPanel.style.display = risk ? 'block' : 'none';
+          if (riskInsights && risk) {
+            riskInsights.innerHTML = '';
+            if (risk.topDay) riskInsights.innerHTML += `<li>Most resets on ${risk.topDay}s.</li>`;
+            if (risk.topMissed) riskInsights.innerHTML += `<li>${risk.topMissed} most frequently missed.</li>`;
+            if (risk.topReason) riskInsights.innerHTML += `<li>Common reason: ${risk.topReason}.</li>`;
+          }
         }
       }
       if (btn.dataset.section === 'proof') renderProofs();

@@ -101,6 +101,17 @@ async function loginWithGoogle() {
   return true;
 }
 
+async function loginAsGuest() {
+  const profileId = 'guest';
+  setSession(profileId);
+  let profile = storage.getProfile(profileId);
+  if (!profile.createdAt) {
+    profile = { ...DEFAULT_PROFILE, createdAt: new Date().toISOString() };
+    storage.setProfile(profile, profileId);
+  }
+  return true;
+}
+
 async function logout() {
   localStorage.removeItem(SESSION_KEY);
 }
@@ -172,6 +183,17 @@ const handleGoogleAuth = async () => {
   }
 };
 window.authLoginWithGoogle = window.authSignupWithGoogle = handleGoogleAuth;
+
+window.authGuest = async () => {
+  try {
+    await loginAsGuest();
+    window.dispatchEvent(new CustomEvent('auth:signup'));
+    return true;
+  } catch (e) {
+    window.dispatchEvent(new CustomEvent('auth:error', { detail: { message: e.message } }));
+    return false;
+  }
+};
 
 window.authLogout = logout;
 window.authRequire = requireAuth;

@@ -28,6 +28,10 @@
         <i class="fab fa-google"></i> Continue with Google
       </button>
 
+      <button type="button" id="guestSignupBtn" class="auth-google-btn" style="margin-top: 8px; background: var(--bg-soft);">
+        <i class="fas fa-user"></i> Continue as Guest
+      </button>
+
       <div class="auth-divider">or</div>
 
       <form id="signupForm">
@@ -57,6 +61,7 @@
     const passwordInput = document.getElementById('password');
     const submitBtn = document.getElementById('signupSubmitBtn');
     const googleBtn = document.getElementById('googleSignupBtn');
+    const guestBtn = document.getElementById('guestSignupBtn');
 
     window.addEventListener('auth:signup', () => {
       window.location.href = 'challenge-selection.html';
@@ -82,6 +87,8 @@
     googleBtn.addEventListener('click', () => {
       window.authSignupWithGoogle && window.authSignupWithGoogle();
     });
+
+    guestBtn?.addEventListener('click', () => window.authGuest && window.authGuest());
   </script>
 </body>
 </html>
