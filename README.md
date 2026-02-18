@@ -6,11 +6,10 @@ A production-ready PWA for controlled transformation through consistency, accoun
 
 ## Quick Start
 
-1. Run local server: `python3 -m http.server 8000` or `npx serve .`
-2. Open `http://localhost:8000`
-3. Flow: Welcome → Sign up → Select Challenge → Dashboard
+1. **Visit the site**: [mazoezi-app live](https://kasigila.github.io/mazoezi-app/) (or your own GitHub Pages URL after deployment)
+2. Flow: Welcome → Sign up → Select Challenge → Dashboard
 
-No Firebase or backend required. Data is stored locally (localStorage + IndexedDB).
+Everything runs in the browser. No local server, Firebase, or backend required. Data is stored locally (localStorage + IndexedDB).
 
 ## Full Setup
 

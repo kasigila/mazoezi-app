@@ -35,33 +35,7 @@ If your site is at `https://user.github.io/mazoezi-app/`:
 
 ---
 
-## 3. Testing Locally
-
-PWAs require **HTTPS** or **localhost**. Use a local server:
-
-### Using Python
-
-```bash
-# Python 3
-python3 -m http.server 8000
-
-# Open http://localhost:8000
-```
-
-### Using Node (npx)
-
-```bash
-npx serve .
-# Opens http://localhost:3000
-```
-
-### Using VS Code Live Server
-
-Install "Live Server" extension, right-click `index.html` > "Open with Live Server".
-
----
-
-## 4. Install as PWA
+## 3. Install as PWA
 
 1. Open the app in Chrome/Safari
 2. Chrome: Menu (3 dots) > **Install app** or **Add to Home screen**
@@ -69,7 +43,7 @@ Install "Live Server" extension, right-click `index.html` > "Open with Live Serv
 
 ---
 
-## 5. Generate App Icons
+## 4. Generate App Icons
 
 The manifest references PNG icons. Generate them:
 
@@ -88,14 +62,14 @@ Or use any 512×512 PNG and resize for each size. The manifest expects:
 
 ---
 
-## 6. Notifications
+## 5. Notifications
 
 - **Local notifications**: Toggle Reminders on the dashboard. Works when the tab is open.
 - **Push notifications**: Would require a backend or service (e.g. Firebase Cloud Messaging). Not included in this setup.
 
 ---
 
-## 7. Deploying Updates
+## 6. Deploying Updates
 
 ### Service Worker Cache
 
@@ -115,7 +89,7 @@ The service worker uses versioned cache: `mazoezi-v1.1.0`. To force a refresh:
 
 ---
 
-## 8. Project Structure
+## 7. Project Structure
 
 ```
 /
@@ -145,7 +119,7 @@ The service worker uses versioned cache: `mazoezi-v1.1.0`. To force a refresh:
 
 ---
 
-## 9. Troubleshooting
+## 8. Troubleshooting
 
 | Issue | Fix |
 |-------|-----|
@@ -157,7 +131,7 @@ The service worker uses versioned cache: `mazoezi-v1.1.0`. To force a refresh:
 
 ---
 
-## 10. Data Backup
+## 9. Data Backup
 
 - **Export JSON**: Settings > Export JSON — downloads profile, days, completions, XP, cycles
 - **Export Monthly**: Settings > Export HTML Summary — downloadable report
